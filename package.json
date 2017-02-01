@@ -1,0 +1,22 @@
+{
+  "name": "inject-stylesheet-template",
+  "version": "1.0.0",
+  "description": "Resolve registered CSS stylesheet template & inject strategically into head.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joneit/inject-stylesheet-template.git"
+  },
+  "author": "joneit <jonathan.eiten@mojotouch.com> (http://mojotouch.com)",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/joneit/inject-stylesheet-template/issues"
+  },
+  "homepage": "https://github.com/joneit/inject-stylesheet-template#readme",
+  "dependencies": {
+    "automat": "^1.2.0"
+  }
+}
