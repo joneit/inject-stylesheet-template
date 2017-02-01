@@ -2,7 +2,7 @@ Resolve registered CSS stylesheet template & inject strategically into head.
 
 ### Definitions
 
-_resolve:_ uses [`automat`]() to merge values of optional parameters into stylesheet
+_resolve:_ uses [`automat`](https://www.npmjs.com/package/automat) to merge values of optional parameters into stylesheet
 
 _registered:_ dereferenced from the "registry" (_i.e.,_ the calling context)
 
