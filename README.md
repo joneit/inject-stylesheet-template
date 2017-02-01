@@ -14,46 +14,58 @@ Returns a reference to the injected `<style>` element.
 
 ### Examples
 
-#### Non-strict mode
+#### Stylesheet registry in a separate file
 
-In non-strict mode, the registry (calling context) defaults to the global object:
+File: myCssRegistry.js
 
 ```javascript
-var inject = require('inject-stylesheet-template');
-var day = 'body { background-color: #ffe }';
-var styleEl = inject('day'); // inject <style id="day">body { background-color: #ffe }</style> into <head>
+module.exports = {
+    day: 'body { background-color: #ffe }',
+    eve: 'body { background-color: #666; color: #eee; }'
+}
 ```
 
-#### Strict mode
-
-In strict mode, calling context is undefined so the registry _must_ be specified:
+In your app layer:
 
 ```javascript
-var styleEl = inject.call(window, 'day');
+var injectFromExternalRegistry = require('inject-stylesheet-template').bind(require('./myCssRegistry'));
+injectFromExternalRegistry('day'); // inject <style id="day">body { background-color: #ffe }</style> into <head>
 ```
 
-or:
+#### Stylesheet registry in same file
 
 ```javascript
+var var injectFromInternalRegistry = require('inject-stylesheet-template');
 var registry = {
     day: 'body { background-color: #ffe }',
     eve: 'body { background-color: #666; color: #eee; }'
 };
 var hr = (new Date).getHours();
-var styleEl = inject.call(registry, 6 < hr || hr < 18 ? 'day' : 'eve');
+injectFromInternalRegistry.call(registry, 6 < hr || hr < 18 ? 'day' : 'eve');
+```
+
+#### Non-strict mode
+
+In non-strict mode, you can use the global object as your registry by taking advantage of the default calling context:
+
+```javascript
+var inject = ...; // expose the module somehow
+var day = 'body { background-color: #ffe }';
+inject('day');
+```
+
+This is not recommended as it "pollutes the global namespace," but makes for simpler examples...
+
+#### Merge parameter values
+
+```javascript
+var box = 'div { background-color: ${0}; color: ${1} }';
+inject('box', 'yellow', 'red'); // as resolved: body { background-color: yellow; color: red }
 ```
 
 #### Inject strategically
 
-```
-inject(true, 'day'); // before first stylesheet in <head> loaded with page
-inject(false, 'day'); // end of <head>
-inject('day'); // per inject.before (true by default)
-```
-
-#### Merge parameter values
-
-```
+```javascript
 inject(true, 'day'); // before first stylesheet in <head> loaded with page
 inject(false, 'day'); // end of <head>
 inject('day'); // per inject.before (true by default)
@@ -61,7 +73,10 @@ inject('day'); // per inject.before (true by default)
 
 #### Remove injected stylesheet
 
+The return value is useful here:
+
 ```javascript
+var styleEl = inject(...);
 styleEl.remove(); // IE-unfriendly
 styleEl.parentNode.removeChild(styleEl); // IE-friendly
 ```

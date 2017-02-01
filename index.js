@@ -23,11 +23,11 @@ function injectStylesheetTemplate(before, id) {
     var optionalArgsStartAt, stylesheet, head, refNode, css, args,
         prefix = injectStylesheetTemplate.prefix;
 
-    if (typeof after === boolean) {
+    if (typeof before === 'boolean') {
         optionalArgsStartAt = 2;
     } else {
         id = before;
-        before = injectStylesheetTemplate.after;
+        before = injectStylesheetTemplate.before;
         optionalArgsStartAt = 1;
     }
 

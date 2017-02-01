@@ -1,6 +1,6 @@
 {
   "name": "inject-stylesheet-template",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Resolve registered CSS stylesheet template & inject strategically into head.",
   "main": "index.js",
   "scripts": {
